@@ -9,29 +9,34 @@ class KnowledgePage extends StatefulWidget {
   }
 }
 
-class _KnowledgePage extends State<KnowledgePage> {
-  List<String> imgs = [
-    "http://ww4.sinaimg.cn/large/7a8aed7bjw1exp4h479xfj20hs0qoq6t.jpg",
-    "http://ww1.sinaimg.cn/large/0065oQSqly1frepozc5taj30qp0yg7aq.jpg",
-    "http://ww1.sinaimg.cn/large/0065oQSqly1frept5di16j30p010g0z9.jpg"
+class _KnowledgePage extends State<KnowledgePage>
+    with TickerProviderStateMixin {
+  TabController _tabController;
+  List<Tab> tabs = [
+    Tab(
+      text: '汽车',
+    ),
+    Tab(
+      text: '要闻',
+    )
   ];
 
   @override
   Widget build(BuildContext context) {
+    _tabController = new TabController(length: tabs.length, vsync: this);
     return Scaffold(
-      body: Container(
-        height: 180,
-        child: Swiper(
-          autoplay: true,
-          pagination: SwiperPagination(),//添加indicator
-          itemCount: imgs.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Image.network(
-              imgs[index],
-              fit: BoxFit.cover,
-            );
-          },
-        ),
+      body: Column(
+        children: <Widget>[
+          Container(
+            height: 50,
+            child: TabBar(tabs: tabs),
+          ),
+          TabBarView(
+            children: <Widget>[
+
+            ],
+          )
+        ],
       ),
     );
   }

@@ -54,7 +54,7 @@ class ApiService {
     try {
       Response response = await dio.get(Apis.WX_CHAPTERS_LIST);
       if (response.statusCode == 200) {
-        return 200;
+        return response;
       } else {
         throw Exception('网络异常');
       }
