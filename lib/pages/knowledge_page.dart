@@ -4,7 +4,6 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 class KnowledgePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _KnowledgePage();
   }
 }
@@ -14,11 +13,11 @@ class _KnowledgePage extends State<KnowledgePage>
   TabController _tabController;
   List<Tab> tabs = [
     Tab(
-      text: '汽车',
+      text: '体系',
     ),
     Tab(
-      text: '要闻',
-    )
+      text: '导航',
+    ),
   ];
 
   @override
@@ -29,13 +28,25 @@ class _KnowledgePage extends State<KnowledgePage>
         children: <Widget>[
           Container(
             height: 50,
-            child: TabBar(tabs: tabs),
+            color: Colors.red,
+            child: TabBar(
+              isScrollable: false,
+              indicatorColor: Colors.white,
+              tabs: tabs,
+              controller: _tabController,
+            ),
           ),
-          TabBarView(
-            children: <Widget>[
-
-            ],
-          )
+          Expanded(
+              child: TabBarView(
+            children: tabs.map((Tab tab) {
+              return Center(
+                  child: Text(
+                tab.text,
+                style: TextStyle(fontSize: 50, color: Colors.red),
+              ));
+            }).toList(),
+            controller: _tabController,
+          ))
         ],
       ),
     );

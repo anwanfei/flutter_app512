@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp512/data/api/api_service.dart';
 import 'package:flutterapp512/data/model/wx_chapters_model.dart';
 
+import 'package:flutterapp512/ui/wx_article_screen.dart';
+
 class WechatPage extends StatefulWidget {
   createState() => _WechatPage();
 }
@@ -58,7 +60,7 @@ class _WechatPage extends State<WechatPage> with TickerProviderStateMixin {
           Expanded(
               child: TabBarView(
             children: _wxChaptersModel.data.map((WXChaptersBean wxChaptersBean) {
-              return Center(child: Text(wxChaptersBean.name));
+              return WXArticleScreen(wxChaptersBean.id);
             }).toList(),
             controller: _tabController,
           ))

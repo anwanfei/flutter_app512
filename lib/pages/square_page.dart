@@ -34,7 +34,7 @@ class _SquarePage extends State<SquarePage> {
   }
 
   void getArticleList() async {
-    await ApiService().getArticleList(_page).then((value) {
+    await ApiService().getSquareList(_page).then((value) {
       var data = json.decode(value.toString());
       setState(() {
         _articleModel = ArticleModel.fromJson(data);
