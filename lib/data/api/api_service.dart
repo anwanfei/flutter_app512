@@ -77,4 +77,47 @@ class ApiService {
       print(e);
     }
   }
+
+  ///知识体系数据
+  getKnowledgeTreeData() async {
+    try {
+      Response response = await dio.get(Apis.KNOWLEDGE_TREE_LIST);
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw Exception('网络异常:' + response.statusMessage);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  ///知识体系详情
+  getKnowledgeDetailListData(int _page, int _id) async {
+    try {
+      Response response =
+          await dio.get(Apis.KNOWLEDGE_DETAIL_LIST + "/$_page/json?cid=$_id");
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw Exception('网络异常:' + response.statusMessage);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  ///获取导航列表数据
+  getNavigationList() async {
+    try {
+      Response response = await dio.get(Apis.NAVIGATION_LIST);
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw Exception('网络异常:' + response.statusMessage);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }

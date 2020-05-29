@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutterapp512/ui/knowlwdge_tree_screen.dart';
+import 'package:flutterapp512/ui/navigation_screen.dart';
 
 class KnowledgePage extends StatefulWidget {
   @override
@@ -38,13 +40,10 @@ class _KnowledgePage extends State<KnowledgePage>
           ),
           Expanded(
               child: TabBarView(
-            children: tabs.map((Tab tab) {
-              return Center(
-                  child: Text(
-                tab.text,
-                style: TextStyle(fontSize: 50, color: Colors.red),
-              ));
-            }).toList(),
+            children: <Widget>[
+              KnowledgeTreeScreen(),
+              NavigationScreen(),
+            ],
             controller: _tabController,
           ))
         ],
