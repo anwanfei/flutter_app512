@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp512/data/model/article_model.dart';
 import 'package:flutterapp512/data/model/wx_article_model.dart';
+import 'package:flutterapp512/ui/webview_screen.dart';
 import 'package:flutterapp512/utils/route_util.dart';
 
 class ItemWxArticleList extends StatefulWidget {
@@ -20,7 +21,10 @@ class ItemWxArticleListState extends State<ItemWxArticleList> {
     var item = widget.item;
     return InkWell(
       onTap: () {
-        RouteUtil.toWebView(context, item.title, item.link);
+//        RouteUtil.toWebView(context, item.title, item.link);
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return WebViewScreen(title: item.title, url: item.link);
+        }));
       },
       child: Column(
         children: <Widget>[
@@ -38,10 +42,10 @@ class ItemWxArticleListState extends State<ItemWxArticleList> {
                 ),
                 Expanded(
                     child: Text(
-                  item.niceDate,
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
-                  textAlign: TextAlign.right,
-                ))
+                      item.niceDate,
+                      style: TextStyle(color: Colors.grey, fontSize: 12),
+                      textAlign: TextAlign.right,
+                    ))
               ],
             ),
           ),

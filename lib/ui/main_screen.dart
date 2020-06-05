@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp512/pages/anfly_screen.dart';
 import 'package:flutterapp512/pages/home_page.dart';
 import 'package:flutterapp512/pages/knowledge_page.dart';
 import 'package:flutterapp512/pages/square_page.dart';
@@ -21,7 +22,8 @@ class MainScreenState extends State<MainScreen> {
       ..add(HomePage())
       ..add(SquarePage())
       ..add(WechatPage())
-      ..add(KnowledgePage());
+      ..add(KnowledgePage())
+      ..add(AnflyScreen());
     super.initState();
   }
 
@@ -108,6 +110,13 @@ class MainScreenState extends State<MainScreen> {
               ),
               title: Text(
                 '体系',
+              )),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person,
+              ),
+              title: Text(
+                '没事',
               )),
         ],
       ),

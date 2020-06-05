@@ -41,6 +41,7 @@ class _WXArticleScreen extends State<WXArticleScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_wxArticleModel.data == null) return loadingWidget();
     return ListView.builder(
       itemBuilder: itemview,
       itemCount: _wxArticleModel.data.datas.length,
@@ -52,4 +53,12 @@ class _WXArticleScreen extends State<WXArticleScreen> {
     WXArticleBean articleBean = _wxArticleModel.data.datas[index];
     return ItemWxArticleList(articleBean);
   }
+}
+
+Widget loadingWidget() {
+  return Center(
+    child: CircularProgressIndicator(
+      strokeWidth: 2.0,
+    ),
+  );
 }

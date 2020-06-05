@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp512/data/api/api_service.dart';
 import 'package:flutterapp512/data/model/article_model.dart';
+import 'package:flutterapp512/utils/loadind_util.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SquarePage extends StatefulWidget {
   createState() => _SquarePage();
@@ -10,8 +13,37 @@ class SquarePage extends StatefulWidget {
 
 class _SquarePage extends State<SquarePage> {
   ScrollController _scrollController = ScrollController();
-  ArticleModel _articleModel = ArticleModel();
+
+//  ArticleModel _articleModel = ArticleModel();
+  List<ArticleBean> _articles = new List();
+
   int _page = 0;
+  RefreshController _refreshController =
+      new RefreshController(initialRefresh: false);
+
+  getMoreSquareList() async {
+    _page++;
+    await ApiService().getSquareList(_page).then((value) {
+      var data = json.decode(value.toString());
+      _refreshController.loadComplete();
+      setState(() {
+        ArticleModel _articleModel = ArticleModel.fromJson(data);
+        _articles.addAll(_articleModel.data.datas);
+      });
+    });
+  }
+
+  void getArticleList() async {
+    _page = 0;
+    await ApiService().getSquareList(_page).then((value) {
+      var data = json.decode(value.toString());
+      _refreshController.refreshCompleted();
+      setState(() {
+        ArticleModel _articleModel = ArticleModel.fromJson(data);
+        _articles = _articleModel.data.datas;
+      });
+    });
+  }
 
   @override
   void initState() {
@@ -21,25 +53,26 @@ class _SquarePage extends State<SquarePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: itemView,
-      itemCount: _articleModel.data.datas.length,
-      controller: _scrollController,
+    if (_articles.length <= 0) return LoadingUtil.loading();
+    return SmartRefresher(
+      enablePullDown: true,
+      enablePullUp: true,
+      header: MaterialClassicHeader(),
+      footer: RefreshFooter(),
+      controller: _refreshController,
+      onRefresh: getArticleList,
+      onLoading: getMoreSquareList,
+      child: ListView.builder(
+        itemBuilder: itemView,
+        itemCount: _articles.length,
+        controller: _scrollController,
+      ),
     );
   }
 
   Widget itemView(BuildContext context, int inext) {
-    ArticleBean articleBean = _articleModel.data.datas[inext];
+    ArticleBean articleBean = _articles[inext];
     return ItemSquareScreen(articleBean);
-  }
-
-  void getArticleList() async {
-    await ApiService().getSquareList(_page).then((value) {
-      var data = json.decode(value.toString());
-      setState(() {
-        _articleModel = ArticleModel.fromJson(data);
-      });
-    });
   }
 }
 
@@ -117,4 +150,34 @@ class _ItemSquareScreen extends State<ItemSquareScreen> {
       ),
     );
   }
+}
+
+/// 自定义 FooterView
+class RefreshFooter extends CustomFooter {
+  @override
+  double get height => 40;
+
+  @override
+  FooterBuilder get builder => (context, mode) {
+        Widget body;
+        if (mode == LoadStatus.idle) {
+          body = Text("上拉加载更多~");
+        } else if (mode == LoadStatus.loading) {
+          body = Wrap(
+            spacing: 6,
+            children: <Widget>[
+              CupertinoActivityIndicator(),
+              Text("加载中..."),
+            ],
+          );
+        } else if (mode == LoadStatus.failed) {
+          body = Text("加载失败，点击重试~");
+        } else {
+          body = Text("没有更多数据了~");
+        }
+        return Container(
+          height: 40,
+          child: Center(child: body),
+        );
+      };
 }

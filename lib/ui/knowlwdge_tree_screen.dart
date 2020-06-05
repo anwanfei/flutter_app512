@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp512/data/api/api_service.dart';
 import 'package:flutterapp512/data/model/knowledge_tree_model.dart';
+import 'package:flutterapp512/pages/home_page.dart';
+import 'package:flutterapp512/utils/loadind_util.dart';
 
 class KnowledgeTreeScreen extends StatefulWidget {
   @override
@@ -33,6 +35,7 @@ class _KnowledgeTreeScreen extends State<KnowledgeTreeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_knowledgeTreeModel.data == null) return LoadingUtil.loading();
     return ListView.builder(
       itemBuilder: itemView,
       controller: _scrollController,
@@ -41,6 +44,7 @@ class _KnowledgeTreeScreen extends State<KnowledgeTreeScreen> {
   }
 
   Widget itemView(BuildContext context, int index) {
+    if (_knowledgeTreeModel.data == null) return LoadingUtil.loading();
     var knowledgeTreeBean = _knowledgeTreeModel.data[index];
     return InkWell(
       onTap: () {

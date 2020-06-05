@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp512/ui/webview_screen.dart';
 //import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class WebViewScreen extends StatefulWidget {

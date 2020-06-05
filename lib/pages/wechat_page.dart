@@ -39,7 +39,9 @@ class _WechatPage extends State<WechatPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    _tabController = new TabController(length: _wxChaptersModel.data.length, vsync: this);
+    if (_wxChaptersModel.data == null) return loadingWidget();
+    _tabController =
+        new TabController(length: _wxChaptersModel.data.length, vsync: this);
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -59,7 +61,8 @@ class _WechatPage extends State<WechatPage> with TickerProviderStateMixin {
           ),
           Expanded(
               child: TabBarView(
-            children: _wxChaptersModel.data.map((WXChaptersBean wxChaptersBean) {
+            children:
+                _wxChaptersModel.data.map((WXChaptersBean wxChaptersBean) {
               return WXArticleScreen(wxChaptersBean.id);
             }).toList(),
             controller: _tabController,
@@ -68,4 +71,12 @@ class _WechatPage extends State<WechatPage> with TickerProviderStateMixin {
       ),
     );
   }
+}
+
+Widget loadingWidget() {
+  return Center(
+    child: CircularProgressIndicator(
+      strokeWidth: 2.0,
+    ),
+  );
 }

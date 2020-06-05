@@ -58,13 +58,17 @@ class _HomeScreen extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
-        itemBuilder: itemView,
-        controller: scrollController,
-        itemCount: _articleModel.data.datas.length + 1,
-      ),
-    );
+    if (_articleModel.data == null) {
+      return loadingWidget();
+    } else {
+      return Scaffold(
+        body: ListView.builder(
+          itemBuilder: itemView,
+          controller: scrollController,
+          itemCount: _articleModel.data.datas.length + 1,
+        ),
+      );
+    }
   }
 
   Widget itemView(BuildContext context, int index) {
@@ -90,4 +94,12 @@ class _HomeScreen extends State<HomePage> {
     ArticleBean item = _articleModel.data.datas[index - 1];
     return ItemArticleList(item: item);
   }
+}
+
+Widget loadingWidget() {
+  return Center(
+    child: CircularProgressIndicator(
+      strokeWidth: 2.0,
+    ),
+  );
 }

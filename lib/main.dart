@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp512/ui/main_screen.dart';
+import 'package:flutterapp512/ui/welcome_screen.dart';
+import 'package:flutterapp512/ui/welcome_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "玩安卓",
       theme: ThemeData(accentColor: Colors.red),
-      home: MainScreen(),
+      home: WelcomeScreen(),
     );
   }
 }
